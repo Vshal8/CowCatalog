@@ -5,15 +5,18 @@
  * @format
  */
 
-import { View } from 'react-native';
-import { globalStyles } from '@/utils/theme/globalStyles';
 import AppNavigator from '@/navigation/AppNavigator';
+import { NavigationContainer } from '@react-navigation/native';
+import { initialWindowMetrics, SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function App() {
+
   return (
-    <View style={globalStyles.flexFull}>
-      <AppNavigator />
-    </View>
+    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 

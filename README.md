@@ -1,97 +1,117 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# CowCatalog
 
-# Getting Started
+A React Native application for managing cows data.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Project Overview
 
-## Step 1: Start Metro
+CowCatalog is a mobile-first cattle management system that allows users to create, view, and manage cow records.
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Technical Approach
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+### Architecture & State Management
 
-```sh
-# Using npm
+- **Zustand for State Management**: Lightweight state management solution for local storage and global state handling. The store (`src/zustand/store.ts`) manages cow data, CRUD operations, and filtering logic without the complexity of Redux.
+
+### UI & Styling
+
+- **Global Theming System**: Centralized theme management in `src/utils/theme/`:
+  - `colors.ts` - Color palette definitions
+  - `globalStyles.ts` - Reusable style objects
+  - `globalStyleDefinitions.ts` - Common style patterns and utilities
+  
+  This approach ensures consistent styling across the app and makes theme updates straightforward.
+
+### Performance Optimization
+
+- **Pure Components with React.memo**: Components are optimized using the `memo` hook to prevent unnecessary re-renders, particularly important for list items and frequently updated UI elements.
+- **Component Composition**: Modular component structure with focused, single-responsibility components.
+- **FlatList Optimization**:
+Avoided inline functions and components.
+All callbacks are memoized using useCallback.
+Render items are extracted into separate memoized components (CowListCard, ListEmptyContainer, etc.).
+Key extractors are preserved for smooth scrolling.
+
+### Type Safety
+
+- **TypeScript**: Full TypeScript implementation with strict type checking
+- **Type-safe Navigation**: Strongly typed navigation params using React Navigation's TypeScript support
+
+### Navigation
+
+- **React Navigation**: Native stack navigator for iOS/Android with type-safe routing
+- **Screen Organization**: Screens organized by feature with dedicated components and utilities
+
+### Project Structure
+
+```
+src/
+├── components/         # Reusable UI components
+├── navigation/         # Navigation configuration and route definitions
+├── screens/            # App screens (CowList, CowDetails, CreateCow)
+│   ├── CowListScreen/
+│   ├── CowDetailsScreen/
+│   └── CreateCowScreen/
+├── utils/              # Utilities and helpers
+│   ├── assets/          # Images, icons, etc.
+│   └── schemas/        # Type definitions
+│   ├── theme/          # Global theming system
+│   └── schemas/  
+└── zustand/            # State management store
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js >= 20
+- React Native development environment setup
+- iOS: Xcode and CocoaPods
+- Android: Android Studio and SDK
+
+### Installation
+
+```bash
+npm install
+```
+
+### Running the App
+
+```bash
+# Start Metro bundler
 npm start
 
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+# Run on iOS
 npm run ios
 
-# OR using Yarn
-yarn ios
+# Run on Android
+npm run android
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### Development
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+```bash
+# Lint code
+npm run lint
 
-## Step 3: Modify your app
+# Run tests
+npm run test
+```
 
-Now that you have successfully run the app, let's make changes!
+## Key Features
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+- Create and manage cow records
+- Track cow status (Active, In Treatment, Deceased)
+- Record weight and calculate daily gain
+- Event tracking system
+- Filter and search capabilities
+- Type-safe forms with validation
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## Tech Stack
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- **React Native** 0.82.0
+- **TypeScript** 5.8.3
+- **Zustand** 5.0.8 - State management
+- **React Navigation** 7.x - Navigation
+- **Zod** - Schema validation
+- **React Hook Form** - Form management
+- **Moment.js** - Date handling
